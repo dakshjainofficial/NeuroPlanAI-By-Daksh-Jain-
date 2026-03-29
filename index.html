@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NeuroPlan AI – Adaptive Study Intelligence</title>
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="stylesheet" href="style.css" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+  <!-- PRELOADER -->
+  <div id="preloader">
+    <div class="loader-content">
+      <div class="loader-logo"><img src="favicon.png" alt="NeuroPlan AI"
+          style="width:64px;height:64px;border-radius:14px;box-shadow: 0 0 20px rgba(108,99,255,0.4);"></div>
+      <h1 class="loader-text">NeuroPlanAI</h1>
+      <p class="loader-sub">by Daksh Jain</p>
+      <div class="loader-bar-wrap">
+        <div class="loader-bar"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BACKGROUND MESH -->
+  <div class="bg-mesh">
+    <div class="mesh-orb orb1"></div>
+    <div class="mesh-orb orb2"></div>
+    <div class="mesh-orb orb3"></div>
+  </div>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-icon" style="background:none;box-shadow:none;"><img src="favicon.png" alt="Logo"
+          style="width:34px;height:34px;border-radius:8px;"></div>
+      <span class="logo-text">NeuroPlan<em>AI</em></span>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="#" class="nav-item active" data-section="dashboard" onclick="showSection('dashboard',this)">
+        <span class="nav-icon">◈</span><span>Dashboard</span>
+      </a>
+      <a href="#" class="nav-item" data-section="subjects" onclick="showSection('subjects',this)">
+        <span class="nav-icon">◎</span><span>Subjects</span>
+      </a>
+      <a href="#" class="nav-item" data-section="planner" onclick="showSection('planner',this)">
+        <span class="nav-icon">◷</span><span>Study Plan</span>
+      </a>
+      <a href="#" class="nav-item" data-section="focus" onclick="showSection('focus',this)">
+        <span class="nav-icon">◉</span><span>Focus Mode</span>
+      </a>
+      <a href="#" class="nav-item" data-section="analytics" onclick="showSection('analytics',this)">
+        <span class="nav-icon">◆</span><span>Analytics</span>
+      </a>
+      <a href="#" class="nav-item" data-section="mindmap" onclick="showSection('mindmap',this)">
+        <span class="nav-icon">❋</span><span>AI Mind Map</span>
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="streak-badge">
+        <span class="streak-fire">🔥</span>
+        <span id="streakCount">7 Day Streak</span>
+      </div>
+      <div class="sidebar-points">
+        <span class="pts-label">XP Points</span>
+        <span class="pts-val" id="sidebarPoints">0</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content">
+
+    <!-- TOPBAR -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="hamburger" onclick="toggleSidebar()">☰</button>
+        <div class="page-title" id="pageTitle">Dashboard</div>
+      </div>
+      <div class="topbar-right">
+        <div class="topbar-badge burnout-warn hidden" id="burnoutWarn">⚠ Burnout Risk</div>
+        <div class="topbar-badge low-prod hidden" id="lowProdWarn">📉 Low Productivity</div>
+      </div>
+    </header>
+
+    <!-- ═══════════ SECTION: DASHBOARD ═══════════ -->
+    <section class="section active" id="sec-dashboard">
+      <div class="section-header">
+        <h1>Good to see you, <span class="gradient-text">Scholar</span> 👋</h1>
+        <p class="section-sub">Your adaptive AI system is running. Let's crush those exams.</p>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat-card glass" id="statProductivity">
+          <div class="stat-label">Productivity Score</div>
+          <div class="stat-value" id="productivityScore">0%</div>
+          <div class="stat-bar-wrap">
+            <div class="stat-bar" id="productivityBar"></div>
+          </div>
+        </div>
+        <div class="stat-card glass" id="statWeakest">
+          <div class="stat-label">⚠ Weakest Subject</div>
+          <div class="stat-value" id="weakestSubject">—</div>
+          <div class="stat-sub" id="weakestPrep">Add subjects to detect</div>
+        </div>
+        <div class="stat-card glass">
+          <div class="stat-label">🏆 Points</div>
+          <div class="stat-value" id="pointsDisplay">0</div>
+          <div class="stat-sub">Keep studying to earn more</div>
+        </div>
+        <div class="stat-card glass">
+          <div class="stat-label">📅 Subjects Tracked</div>
+          <div class="stat-value" id="subjectCount">0</div>
+          <div class="stat-sub" id="predictionText">Add subjects to predict</div>
+        </div>
+      </div>
+
+      <!-- BADGES -->
+      <div class="glass card-section">
+        <h3 class="card-title">🎖 Achievement Badges</h3>
+        <div class="badges-grid" id="badgesGrid">
+          <div class="badge locked" id="badge-starter">🌱<span>Starter</span></div>
+          <div class="badge locked" id="badge-planner">📋<span>Planner</span></div>
+          <div class="badge locked" id="badge-focused">🎯<span>Focused</span></div>
+          <div class="badge locked" id="badge-streak">🔥<span>On Fire</span></div>
+          <div class="badge locked" id="badge-scholar">🎓<span>Scholar</span></div>
+          <div class="badge locked" id="badge-master">👑<span>Master</span></div>
+        </div>
+      </div>
+
+      <!-- TODAY'S PLAN PREVIEW -->
+      <div class="glass card-section">
+        <h3 class="card-title">📌 Today's Priority Tasks</h3>
+        <div id="todayPreview" class="today-preview">
+          <div class="empty-state">Add subjects and generate your plan to see today's tasks.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════ SECTION: SUBJECTS ═══════════ -->
+    <section class="section" id="sec-subjects">
+      <div class="section-header">
+        <h1>Subject <span class="gradient-text">Manager</span></h1>
+        <p class="section-sub">Add your subjects and let the AI plan around them.</p>
+      </div>
+
+      <div class="glass card-section">
+        <h3 class="card-title">➕ Add Subject</h3>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Subject Name</label>
+            <input type="text" id="subjectName" placeholder="e.g. Quantum Physics" class="form-input" />
+          </div>
+          <div class="form-group">
+            <label>Difficulty</label>
+            <select id="subjectDifficulty" class="form-input">
+              <option value="easy">Easy</option>
+              <option value="medium" selected>Medium</option>
+              <option value="hard">Hard</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Days Until Exam</label>
+            <input type="number" id="subjectDays" placeholder="e.g. 14" min="1" class="form-input" />
+          </div>
+          <div class="form-group">
+            <label>Preparation % <span id="prepDisplay">50%</span></label>
+            <input type="range" id="subjectPrep" min="0" max="100" value="50" class="range-input"
+              oninput="document.getElementById('prepDisplay').textContent=this.value+'%'" />
+          </div>
+        </div>
+        <button class="btn btn-primary" onclick="addSubject()">⚡ Add Subject</button>
+      </div>
+
+      <div class="glass card-section">
+        <h3 class="card-title">📚 Your Subjects</h3>
+        <div id="subjectsList" class="subjects-list">
+          <div class="empty-state">No subjects added yet.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════ SECTION: STUDY PLAN ═══════════ -->
+    <section class="section" id="sec-planner">
+      <div class="section-header">
+        <h1>AI Study <span class="gradient-text">Planner</span></h1>
+        <p class="section-sub">Smart, adaptive daily plan generated by NeuroPlan's engine.</p>
+      </div>
+      <button class="btn btn-primary btn-large" onclick="generatePlan()">🧠 Generate Study Plan</button>
+
+      <div id="planOutput" class="plan-output"></div>
+    </section>
+
+    <!-- ═══════════ SECTION: FOCUS MODE ═══════════ -->
+    <section class="section" id="sec-focus">
+      <div class="section-header">
+        <h1>Focus <span class="gradient-text">Mode</span></h1>
+        <p class="section-sub">Pomodoro-powered deep work sessions.</p>
+      </div>
+      <div class="focus-center">
+        <div class="pomodoro-ring glass">
+          <svg class="ring-svg" viewBox="0 0 220 220">
+            <circle class="ring-bg" cx="110" cy="110" r="96" />
+            <circle class="ring-progress" id="ringProgress" cx="110" cy="110" r="96" />
+          </svg>
+          <div class="timer-inner">
+            <div class="timer-label" id="timerLabel">FOCUS</div>
+            <div class="timer-display" id="timerDisplay">25:00</div>
+            <div class="timer-session" id="timerSession">Session 1</div>
+          </div>
+        </div>
+        <div class="timer-controls">
+          <button class="btn btn-primary" id="timerStartBtn" onclick="startTimer()">▶ Start</button>
+          <button class="btn btn-ghost" onclick="pauseTimer()">⏸ Pause</button>
+          <button class="btn btn-ghost" onclick="resetTimer()">↺ Reset</button>
+        </div>
+        <div class="focus-stats glass">
+          <div class="fstat">
+            <div class="fstat-val" id="sessionsCompleted">0</div>
+            <div class="fstat-lbl">Sessions Done</div>
+          </div>
+          <div class="fstat">
+            <div class="fstat-val" id="focusPoints">0</div>
+            <div class="fstat-lbl">XP Earned</div>
+          </div>
+          <div class="fstat">
+            <div class="fstat-val" id="focusMinutes">0</div>
+            <div class="fstat-lbl">Minutes Focused</div>
+          </div>
+        </div>
+        <div id="focusMsg" class="focus-message hidden"></div>
+      </div>
+    </section>
+
+    <!-- ═══════════ SECTION: ANALYTICS ═══════════ -->
+    <section class="section" id="sec-analytics">
+      <div class="section-header">
+        <h1>Analytics <span class="gradient-text">Dashboard</span></h1>
+        <p class="section-sub">Visual insights powered by your study data.</p>
+      </div>
+      <div class="charts-grid">
+        <div class="glass card-section chart-container">
+          <h3 class="card-title">📊 Subject Priority Scores</h3>
+          <div class="canvas-wrap">
+            <canvas id="barChart"></canvas>
+          </div>
+        </div>
+        <div class="glass card-section chart-container">
+          <h3 class="card-title">🥧 Study Time Distribution</h3>
+          <div class="canvas-wrap">
+            <canvas id="pieChart"></canvas>
+          </div>
+        </div>
+      </div>
+      <div class="glass card-section">
+        <h3 class="card-title">🔮 Completion Prediction</h3>
+        <div id="predictionPanel" class="prediction-panel">
+          <div class="empty-state">Generate a plan first to see predictions.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════ SECTION: AI MIND MAP (UNIQUE FEATURE) ═══════════ -->
+    <section class="section" id="sec-mindmap">
+      <div class="section-header">
+        <h1>AI <span class="gradient-text">Mind Map</span> Generator</h1>
+        <p class="section-sub">🌟 <strong>Unique Feature</strong> — Generate a visual knowledge topology from any topic
+          using NeuroPlan's concept-graph engine.</p>
+      </div>
+      <div class="glass card-section">
+        <h3 class="card-title">🧬 Enter a Topic to Map</h3>
+        <div class="form-grid" style="grid-template-columns:1fr auto;">
+          <input type="text" id="mindmapTopic" placeholder="e.g. Machine Learning, Calculus, World War II..."
+            class="form-input" />
+          <button class="btn btn-primary" onclick="generateMindMap()">🗺 Generate Map</button>
+        </div>
+      </div>
+      <div class="glass card-section" id="mindmapContainer" style="min-height:520px;position:relative;">
+        <h3 class="card-title">Knowledge Topology</h3>
+        <canvas id="mindmapCanvas" style="width:100%;height:460px;display:block;"></canvas>
+        <div id="mindmapEmpty" class="empty-state"
+          style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)">Enter a topic above to generate an
+          interactive mind map.</div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- NOTIFICATION TOAST -->
+  <div class="toast" id="toast"></div>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
